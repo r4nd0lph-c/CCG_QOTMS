@@ -3,12 +3,16 @@ using UnityEngine;
 
 namespace DataSystem
 {
+    /// <summary>
+    /// DataManager class manages the saving and loading of game data
+    /// with encryption and decryption using <see cref="AES128"/>.
+    /// </summary>
     public class DataManager : MonoBehaviour
     {
         public static DataManager Instance { get; private set; }
         private const string DataFile = "Data.json";
 
-        void Awake()
+        private void Awake()
         {
             if (Instance == null)
             {
@@ -21,7 +25,7 @@ namespace DataSystem
             }
         }
 
-        public void SaveData(Data data)
+        public void Save(Data data)
         {
             string encryptedData = AES128.Encrypt(JsonUtility.ToJson(data));
 
@@ -34,7 +38,7 @@ namespace DataSystem
 #endif
         }
 
-        public Data LoadData()
+        public Data Load()
         {
             string encryptedData = string.Empty;
 

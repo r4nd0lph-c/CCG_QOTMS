@@ -5,6 +5,10 @@ using System.Security.Cryptography;
 
 namespace DataSystem
 {
+    /// <summary>
+    /// AES128 class provides methods to encrypt and decrypt data
+    /// using the AES (Advanced Encryption Standard) algorithm in 128-bit mode.
+    /// </summary>
     public class AES128
     {
         private static string _calculatedKey;
@@ -15,6 +19,7 @@ namespace DataSystem
                 if (_calculatedKey != null) return _calculatedKey;
 
                 string input = "I love you, my little Queen <3";
+
                 using (MD5 md5 = MD5.Create())
                 {
                     StringBuilder sb = new StringBuilder();
@@ -36,6 +41,7 @@ namespace DataSystem
                 aesAlg.Key = Encoding.UTF8.GetBytes(Key);
                 aesAlg.IV = new byte[16];
                 ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
                 using (MemoryStream ms = new MemoryStream())
                 {
                     using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
@@ -58,6 +64,7 @@ namespace DataSystem
                 aesAlg.Key = Encoding.UTF8.GetBytes(Key);
                 aesAlg.IV = new byte[16];
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
                 using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(encryptedString)))
                 {
                     using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
