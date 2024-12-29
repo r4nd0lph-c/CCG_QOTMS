@@ -19,7 +19,9 @@ namespace DataSystem
                 {
                     StringBuilder sb = new StringBuilder();
                     foreach (byte b in md5.ComputeHash(Encoding.UTF8.GetBytes(input)))
+                    {
                         sb.Append(b.ToString("x2"));
+                    }
                     _calculatedKey = sb.ToString();
                 }
 
@@ -43,6 +45,7 @@ namespace DataSystem
                             sw.Write(decryptedString);
                         }
                     }
+
                     return Convert.ToBase64String(ms.ToArray());
                 }
             }
