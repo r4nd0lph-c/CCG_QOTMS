@@ -9,7 +9,7 @@ namespace DataSystem
     /// AES128 class provides methods to encrypt and decrypt data
     /// using the AES (Advanced Encryption Standard) algorithm in 128-bit mode.
     /// </summary>
-    public class AES128
+    public static class AES128
     {
         private static string _calculatedKey;
         private static string Key
