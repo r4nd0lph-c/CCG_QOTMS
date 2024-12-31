@@ -1,4 +1,6 @@
-namespace DataSystem
+using Localization.Scripts;
+
+namespace DataSystem.Scripts
 {
     /// <summary>
     /// Data class represents the data used in the game.
@@ -7,8 +9,11 @@ namespace DataSystem
     [System.Serializable]
     public class Data
     {
+        public string selectedLocaleCode;
+
         public Data()
         {
+            selectedLocaleCode = LocalizationManager.DefaultLocaleCode;
         }
     }
 }

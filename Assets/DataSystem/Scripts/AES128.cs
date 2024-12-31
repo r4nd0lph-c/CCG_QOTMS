@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 
-namespace DataSystem
+namespace DataSystem.Scripts
 {
     /// <summary>
     /// AES128 class provides methods to encrypt and decrypt data

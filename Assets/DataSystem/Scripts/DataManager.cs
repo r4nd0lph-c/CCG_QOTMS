@@ -1,7 +1,8 @@
+using System;
 using System.IO;
 using UnityEngine;
 
-namespace DataSystem
+namespace DataSystem.Scripts
 {
     /// <summary>
     /// DataManager class manages the saving and loading of game data
@@ -11,6 +12,9 @@ namespace DataSystem
     {
         public static DataManager Instance { get; private set; }
         private const string DataFile = "Data.json";
+        public Data data;
+        public event Action OnDataSaved;
+        public event Action OnDataLoaded;
 
         private void Awake()
         {
@@ -25,7 +29,12 @@ namespace DataSystem
             }
         }
 
-        public void Save(Data data)
+        private void Start()
+        {
+            Load();
+        }
+
+        public void Save()
         {
             string encryptedData = AES128.Encrypt(JsonUtility.ToJson(data));
 
@@ -36,9 +45,11 @@ namespace DataSystem
             string path = Path.Combine(Application.persistentDataPath, DataFile);
             File.WriteAllText(path, encryptedData);
 #endif
+
+            OnDataSaved?.Invoke();
         }
 
-        public Data Load()
+        private void Load()
         {
             string encryptedData = string.Empty;
 
@@ -57,17 +68,19 @@ namespace DataSystem
 
             if (string.IsNullOrEmpty(encryptedData))
             {
-                return new Data();
+                data = new Data();
             }
 
             try
             {
-                return JsonUtility.FromJson<Data>(AES128.Decrypt(encryptedData));
+                data = JsonUtility.FromJson<Data>(AES128.Decrypt(encryptedData));
             }
             catch
             {
-                return new Data();
+                data = new Data();
             }
+
+            OnDataLoaded?.Invoke();
         }
     }
 }
